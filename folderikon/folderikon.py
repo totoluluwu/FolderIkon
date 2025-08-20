@@ -75,8 +75,25 @@ class FolderIkon:
                 if self.__raise_on_existing:
                     exception_exit(FolderIconAlreadyExistsError)
                 self.icon.unlink()
+### folderikon
+#            with Image.open(self.image) as img:
+#                img.save(self.icon, bitmap_format="bmp")
+### luu
+            from PIL import Image
             with Image.open(self.image) as img:
-                img.save(self.icon, bitmap_format="bmp")
+                sizes = [256, 42, 32, 16]
+                icons = []
+
+                img = img.convert("RGBA")
+                for size in sizes:
+                    layer = img.resize((size, size), Image.LANCZOS)
+                    icons.append(layer)
+ 
+                icons[0].save(
+                    self.icon,
+                    format="ICO",
+                    sizes=[(s, s) for s in sizes]
+                ) 
 
         self.conf = self.parent / Path("desktop.ini")
         conf_existed = False

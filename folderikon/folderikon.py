@@ -81,19 +81,16 @@ class FolderIkon:
 ### luu
             from PIL import Image
             with Image.open(self.image) as img:
-                sizes = [256, 42, 32, 16]
-                icons = []
+                sizes = [256, 42, 32, 16] 
 
-                img = img.convert("RGBA")
-                for size in sizes:
-                    layer = img.resize((size, size), Image.LANCZOS)
-                    icons.append(layer)
- 
-                icons[0].save(
+                img = img.convert("RGBA").resize((256,256), Image.LANCZOS)
+
+                img.save(
                     self.icon,
                     format="ICO",
                     sizes=[(s, s) for s in sizes]
                 ) 
+###
 
         self.conf = self.parent / Path("desktop.ini")
         conf_existed = False
